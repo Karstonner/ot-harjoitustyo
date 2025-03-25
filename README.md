@@ -3,6 +3,6 @@
 
 Sovelluksen avulla pystyt tarkkailemaan keräämiäsi keräilykortteja ja lajittelemaan niitä erilaisten ominaisuuksien perusteella. 
 
-[Dokumentaatio](/dokumentaatio)
+[Vaatimusmäärittely](/dokumentaatio/vaatimusmaarittely.md)
 
 [Laskarit](/laskarit)
