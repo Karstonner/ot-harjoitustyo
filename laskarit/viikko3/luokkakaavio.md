@@ -1,3 +1,4 @@
+```mermaid
 classDiagram
 	Monopolipeli "1" -- "2" Noppa
 	Monopolipeli "1" -- "1" Pelilauta
@@ -24,4 +25,4 @@ classDiagram
 	Sattuma "1" -- "1..`*`" Kortti
 	Yhteismaa "1" -- "1..`*`" Kortti
 	Kortti "1" -- "1" Toiminto
-	
+```
