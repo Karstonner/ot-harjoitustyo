@@ -12,7 +12,9 @@ sequenceDiagram
 	kallen_kortti->>rautatietori: lataa_arvoa(3)
 	rautatietori-->>kallen_kortti: 3
 	kallen_kortti->>ratikka6: osta_lippu(0)
-	ratikka6-->>kallen_kortti: 3
+	ratikka6-->>kallen_kortti: 1.5
+	kallen_kortti->>ratikka6: vahenna_arvoa(1.5)
+	ratikka6-->>kallen_kortti: True
 	kallen_kortti->>bussi244: osta_lippu(2)
-	bussi244-->>kallen_kortti: 1
+	bussi244-->>kallen_kortti: False
 ```
