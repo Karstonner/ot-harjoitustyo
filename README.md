@@ -7,6 +7,7 @@ Sovelluksen avulla pystyt tarkkailemaan keräämiäsi keräilykortteja ja lajitt
 
 - [Vaatimusmäärittely](/dokumentaatio/vaatimusmaarittely.md)
 - [Työaikakirjanpito](/dokumentaatio/tyoaikakirjanpito.md)
+- [Changelog](/dokumentaatio/changelog.md)
 
 ## Muut
 
