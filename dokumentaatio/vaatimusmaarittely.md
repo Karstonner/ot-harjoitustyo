@@ -11,7 +11,6 @@ Sovelluksen avulla käyttäjä pystyy listaamaan omistamiaan keräilykortteja ja
 - Korttiin pystyy liittämään kuvan, joka visualisoi sitä listoissa. 
 - Käyttäjä pystyy tarkistamaan, kuinka monta korttia omistaa tietystä setistä.
 
-- (Tämänhetkinen tarkoitus on tehdä sovellus perustuen Pokémon-kortteihin mutta mietin, olisiko mahdollisuus mihin tahansa keräilykortteihin arvokkaampaa?)
 
 ## Jatkokehitysideoita
 

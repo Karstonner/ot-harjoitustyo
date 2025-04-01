@@ -1,7 +1,7 @@
 # Ohjelmistotekniikka, harjoitustyö
-## Keräilykorttisovellus
+## Pokémon-korttien keräilysovellus
 
-Sovelluksen avulla pystyt tarkkailemaan keräämiäsi keräilykortteja ja lajittelemaan niitä erilaisten ominaisuuksien perusteella. 
+Sovelluksen avulla pystyt tarkkailemaan keräämiäsi Pokémon-kortteja ja lajittelemaan niitä erilaisten ominaisuuksien perusteella. 
 
 ## Dokumentaatio-linkit
 
