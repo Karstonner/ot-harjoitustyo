@@ -1,6 +1,5 @@
 class Card:
-    def __init__(self, id, pokemon, pokedex_number, expansion, release_date):
-        self.id = id
+    def __init__(self, pokemon, pokedex_number, expansion, release_date):
         self.pokemon = pokemon
         self.pokedex_number = pokedex_number
         self.expansion = expansion

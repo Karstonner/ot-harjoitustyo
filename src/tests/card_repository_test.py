@@ -12,5 +12,5 @@ class TestCardRepository(unittest.TestCase):
         card_repository.new_card(
             "Bulbasaur", 1, "Base Set", 1999-1-9)
         cards = card_repository.get_cards()
-        self.assertEqual(cards[0][1], "Bulbasaur")
-        self.assertEqual(cards[0][3], "Base Set")
+        self.assertEqual(cards[0].pokemon, "Bulbasaur")
+        self.assertEqual(cards[0].expansion, "Base Set")
