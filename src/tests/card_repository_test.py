@@ -2,6 +2,7 @@ import unittest
 from repositories.card_repository import card_repository
 from initialize import initialize
 
+
 class TestCardRepository(unittest.TestCase):
     def setUp(self):
         card_repository.clear()

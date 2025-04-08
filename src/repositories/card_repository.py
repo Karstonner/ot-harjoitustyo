@@ -1,10 +1,11 @@
-#from entities.card import Card
+# from entities.card import Card
 from db_connection import connect
+
 
 class CardRepository:
     def __init__(self, conn):
         self.conn = conn
-        
+
     def get_cards(self):
         cursor = self.conn.cursor()
         try:
@@ -13,7 +14,7 @@ class CardRepository:
             return result
         except:
             return False
-    
+
     def new_card(self, pokemon, dex_number, expansion, release_date):
         cursor = self.conn.cursor()
         cursor.execute(
@@ -31,5 +32,6 @@ class CardRepository:
             self.conn.commit()
         except:
             pass
+
 
 card_repository = CardRepository(connect())
