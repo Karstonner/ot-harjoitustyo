@@ -1,5 +1,4 @@
 import tkinter as tk
-#from tkinter import ttk
 from repositories.card_repository import card_repository as cr
 
 
@@ -12,6 +11,14 @@ class UI:
         self.root.columnconfigure(1, weight=1)
         heading = tk.Label(self.root, text="Your cards")
         heading.grid(row=0, column=1, columnspan=2, sticky="n")
+        self.name_entry = tk.Entry(self.add_frame)
+        self.name_header = tk.Label(self.card_header_frame, text="Pokémon")
+        self.dex_entry = tk.Entry(self.add_frame)
+        self.dex_header = tk.Label(self.card_header_frame, text="Dex")
+        self.set_entry = tk.Entry(self.add_frame)
+        self.set_header = tk.Label(self.card_header_frame, text="Set")
+        self.date_entry = tk.Entry(self.add_frame)
+        self.date_header = tk.Label(self.card_header_frame, text="Release Date")
         self.start()
 
     def start(self):
@@ -31,19 +38,15 @@ class UI:
 
     def setup_add_frame(self):
         tk.Label(self.add_frame, text="Pokemon's Name").grid(row=1, column=0)
-        self.name_entry = tk.Entry(self.add_frame)
         self.name_entry.grid(row=1, column=1)
 
         tk.Label(self.add_frame, text="Dex Number").grid(row=2, column=0)
-        self.dex_entry = tk.Entry(self.add_frame)
         self.dex_entry.grid(row=2, column=1)
 
         tk.Label(self.add_frame, text="Card Set").grid(row=3, column=0)
-        self.set_entry = tk.Entry(self.add_frame)
         self.set_entry.grid(row=3, column=1)
 
         tk.Label(self.add_frame, text="Release Date").grid(row=4, column=0)
-        self.date_entry = tk.Entry(self.add_frame)
         self.date_entry.grid(row=4, column=1)
 
         submit_button = tk.Button(self.add_frame, text="Submit", command=self.add_new)
@@ -54,16 +57,10 @@ class UI:
 
     def setup_card_headers(self):
         self.card_header_frame.columnconfigure(3, weight=1)
-        self.name_header = tk.Label(self.card_header_frame, text="Pokémon")
+
         self.name_header.grid(row=3, column=6, columnspan=1, padx=5, pady=5, sticky="n")
-
-        self.dex_header = tk.Label(self.card_header_frame, text="Dex")
         self.dex_header.grid(row=3, column=7, columnspan=1, padx=5, pady=5, sticky="n")
-
-        self.set_header = tk.Label(self.card_header_frame, text="Set")
         self.set_header.grid(row=3, column=8, columnspan=1, padx=5, pady=5, sticky="n")
-
-        self.date_header = tk.Label(self.card_header_frame, text="Release Date")
         self.date_header.grid(row=3, column=9, columnspan=1, padx=5, pady=5, sticky="n")
 
     def add_new(self):
@@ -79,24 +76,22 @@ class UI:
 
     def remove_card(self, card):
         cr.remove_card(card.pokemon, card.pokedex_number, card.expansion, card.release_date)
-        # I couldn't get this to work properly, it keeps telling me this card doesn't exist
-        # Will figure out eventually
         self.display_cards()
 
     def display_cards(self):
         i = 0
         cards = cr.get_cards()
         for card in cards:
-            entry_poke = tk.Label(self.root, text=card.pokemon) # pylint: disable=possibly-used-before-assignment
+            entry_poke = tk.Label(self.root, text=card[1])
             entry_poke.grid(row=4+i, column=5, columnspan=1, padx=5, pady=5)
 
-            entry_dex = tk.Label(self.root, text=card.pokedex_number)
+            entry_dex = tk.Label(self.root, text=card[2])
             entry_dex.grid(row=4+i, column=6, columnspan=1, padx=5, pady=5)
 
-            entry_set = tk.Label(self.root, text=card.expansion)
+            entry_set = tk.Label(self.root, text=card[3])
             entry_set.grid(row=4+i, column=7, columnspan=1, padx=5, pady=5)
 
-            entry_date = tk.Label(self.root, text=card.release_date)
+            entry_date = tk.Label(self.root, text=card[4])
             entry_date.grid(row=4+i, column=8, columnspan=1, padx=5, pady=5)
 
             remove_button = tk.Button(self.root, text="Remove")

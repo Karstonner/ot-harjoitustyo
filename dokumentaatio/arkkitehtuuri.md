@@ -1,0 +1,1 @@
+![Luokkarakenne](./kuvat/Class_Diagram.PNG)

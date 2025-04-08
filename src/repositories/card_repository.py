@@ -1,14 +1,16 @@
-from entities.card import Card
+#from entities.card import Card
 from db_connection import connect
 
 
 class CardRepository:
     def __init__(self, conn):
         self.conn = conn
-        self.card_list = []
 
     def get_cards(self):
-        return self.card_list
+        cursor = self.conn.cursor()
+        cursor.execute("""SELECT * FROM Cards""")
+        result = cursor.fetchall()
+        return result
 
     def new_card(self, pokemon, dex_number, expansion, release_date):
         cursor = self.conn.cursor()
@@ -18,7 +20,6 @@ class CardRepository:
             values (?, ?, ?, ?)""",
             (pokemon, dex_number, expansion, release_date))
         self.conn.commit()
-        self.card_list.append(Card(pokemon, dex_number, expansion, release_date))
         return True
 
     def remove_card(self, pokemon, dex_number, expansion, release_date):
@@ -29,7 +30,6 @@ class CardRepository:
             (pokemon, dex_number, expansion, release_date)
         )
         self.conn.commit()
-        #self.card_list.remove(Card(pokemon, dex_number, expansion, release_date))
 
     def clear(self):
         cursor = self.conn.cursor()
