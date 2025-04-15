@@ -1,3 +1,4 @@
+import sqlite3
 from db_connection import connect
 
 
@@ -34,5 +35,5 @@ class CardRepository:
         try:
             cursor.execute("""DELETE FROM Cards""")
             self.conn.commit()
-        except:
+        except sqlite3.OperationalError:
             pass

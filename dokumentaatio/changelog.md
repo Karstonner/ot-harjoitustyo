@@ -11,3 +11,11 @@
 - Testattu GUI:n muodostaminen
 - Lisätty dokumentaatiota
 - Lisää invoke-taskejä
+
+## Viikko 5
+- Siirretty UI pois index-tiedostosta
+- Korttien poistaminen toimii
+- Data on pysyvää
+- Kortteja pystyy lajittelemaan ominaisuuksien perusteella
+- Lisätty testejä
+- Poistettu entities, card_repository on riittävä

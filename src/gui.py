@@ -11,9 +11,11 @@ class UI:
         self.root.columnconfigure(1, weight=1)
         self.sort_by = None
         self.sort_ascending = True
+        self.header_labels = []
+        self.card_widgets = []
         self.cr = cr()
         self.setup()
-    
+
     def setup(self):
         heading = tk.Label(self.root, text="Your cards")
         heading.grid(row=0, column=1, columnspan=2, sticky="n")
@@ -38,7 +40,7 @@ class UI:
         self.setup_card_headers()
         self.card_header_frame.grid_remove()
         self.display_cards()
-    
+
     def setup_add_frame(self):
         tk.Label(self.add_frame, text="Pokemon's Name").grid(row=1, column=0)
         self.name_entry.grid(row=1, column=1)
@@ -57,7 +59,7 @@ class UI:
 
         cancel_button = tk.Button(self.add_frame, text="Cancel", command=self.hide_add)
         cancel_button.grid(row=5, column=1, pady=5)
-    
+
     def setup_card_headers(self):
         headers = ["Pokémon", "Dex #", "Expansion", "Release Date"]
         self.header_labels = []
@@ -70,7 +72,7 @@ class UI:
 
         for col in range(5, 9):
             self.card_header_frame.columnconfigure(col, weight=1)
-    
+
     def show_add(self):
         self.add_button.grid_remove()
         self.add_frame.grid(row=1, column=0, columnspan=2, pady=10)
@@ -113,7 +115,7 @@ class UI:
             entry_date.grid(row=5+i, column=8, columnspan=1, padx=5, pady=5)
             row_widgets.append(entry_date)
 
-            remove_button = tk.Button(self.card_header_frame, text="Remove", 
+            remove_button = tk.Button(self.card_header_frame, text="Remove",
                                       command=lambda c=card, w=row_widgets: self.remove_card(c, w))
             remove_button.grid(row=5+i, column=9, columnspan=1, padx=5, pady=5)
             row_widgets.append(remove_button)
@@ -121,20 +123,20 @@ class UI:
             self.card_widgets.append(row_widgets)
 
             i += 1
-        
+
         if len(cards) == 1:
             amount = tk.Label(self.root, text=" 1 card owned")
             amount.grid(row=1, column=10, columnspan=2, padx=10, sticky="e")
         else:
             amount = tk.Label(self.root, text=f" {len(cards)} cards owned")
             amount.grid(row=1, column=10, columnspan=2, padx=10, sticky="e")
-        
+
         if len(cards) > 0:
             self.setup_card_headers()
             self.card_header_frame.grid(row=4, column=5, columnspan=5)
         else:
             self.card_header_frame.grid_remove()
-    
+
     def setup_sorting(self, sort_index):
         if self.sort_by == sort_index:
             self.sort_ascending = not self.sort_ascending
@@ -142,11 +144,11 @@ class UI:
             self.sort_by = sort_index
             self.sort_ascending = True
         self.display_cards()
-    
+
     @staticmethod
     def sort_cards(cards, sort_by, ascending):
         return sorted(cards, key=lambda x: x[sort_by], reverse=not ascending)
-    
+
     def add_new(self):
         name = self.name_entry.get()
         number = self.dex_entry.get()
@@ -163,7 +165,7 @@ class UI:
         for widget in widgets:
             widget.destroy()
         self.display_cards()
-    
+
     def clear_fields(self):
         self.name_entry.delete(0, tk.END)
         self.dex_entry.delete(0, tk.END)

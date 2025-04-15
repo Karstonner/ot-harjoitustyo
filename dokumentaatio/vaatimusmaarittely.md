@@ -6,10 +6,12 @@ Sovelluksen avulla käyttäjä pystyy listaamaan omistamiaan keräilykortteja ja
 
 ## Suunnitellut toiminnallisuudet
 
-- Kortteja pystyy lisäämään ja poistamaan. (Poistaminen epäonnistuu, muuten tehty)
+- Kortteja pystyy lisäämään ja poistamaan. (Tehty)
 - Kortista näkyvät tiedot ovat nimi, julkaisupäivämäärä ja setti. (Tehty)
-- Korttiin pystyy liittämään kuvan, joka visualisoi sitä listoissa. 
+- Kortteja pystyy lajittelemaan ominaisuuksien perusteella. (Tehty)
 - Käyttäjä pystyy tarkistamaan, kuinka monta korttia omistaa tietystä setistä.
+
+- Korttiin pystyy liittämään kuvan, joka visualisoi sitä listoissa. (Harkitsen tämän jättämistä pois)
 
 
 ## Jatkokehitysideoita
