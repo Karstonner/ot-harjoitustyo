@@ -3,12 +3,12 @@ from db_connection import connect
 
 
 class CardRepository:
-    def __init__(self, conn):
-        self.conn = conn
+    def __init__(self):
+        self.conn = connect()
 
     def get_cards(self):
         cursor = self.conn.cursor()
-        cursor.execute("""SELECT * FROM Cards""")
+        cursor.execute("""SELECT Pokémon, Pokédex_Number, Expansion, Release_Date FROM Cards""")
         result = cursor.fetchall()
         return result
 
@@ -20,7 +20,6 @@ class CardRepository:
             values (?, ?, ?, ?)""",
             (pokemon, dex_number, expansion, release_date))
         self.conn.commit()
-        return True
 
     def remove_card(self, pokemon, dex_number, expansion, release_date):
         cursor = self.conn.cursor()
@@ -38,6 +37,3 @@ class CardRepository:
             self.conn.commit()
         except:
             pass
-
-
-card_repository = CardRepository(connect())
