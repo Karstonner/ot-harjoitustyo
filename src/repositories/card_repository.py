@@ -1,4 +1,3 @@
-#from entities.card import Card
 from db_connection import connect
 
 

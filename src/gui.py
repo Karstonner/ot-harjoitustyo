@@ -143,7 +143,8 @@ class UI:
             self.sort_ascending = True
         self.display_cards()
     
-    def sort_cards(cards, sort_by, ascending=True):
+    @staticmethod
+    def sort_cards(cards, sort_by, ascending):
         return sorted(cards, key=lambda x: x[sort_by], reverse=not ascending)
     
     def add_new(self):
