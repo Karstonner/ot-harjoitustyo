@@ -1,15 +1,9 @@
 from db_connection import connect
 
 
-def clear(conn):
-    cursor = conn.cursor()
-    cursor.execute("""DROP TABLE if EXISTS Cards;""")
-    conn.commit()
-
-
 def create_tables(conn):
     cursor = conn.cursor()
-    cursor.execute("""CREATE TABLE Cards (
+    cursor.execute("""CREATE TABLE IF NOT EXISTS Cards (
                    id INTEGER PRIMARY KEY,
                    Pokémon TEXT,
                    Pokédex_Number INTEGER,
@@ -20,8 +14,6 @@ def create_tables(conn):
 
 def initialize():
     conn = connect()
-
-    clear(conn)
     create_tables(conn)
 
 

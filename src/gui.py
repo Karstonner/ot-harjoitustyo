@@ -58,10 +58,10 @@ class UI:
     def setup_card_headers(self):
         self.card_header_frame.columnconfigure(3, weight=1)
 
-        self.name_header.grid(row=3, column=6, columnspan=1, padx=5, pady=5, sticky="n")
-        self.dex_header.grid(row=3, column=7, columnspan=1, padx=5, pady=5, sticky="n")
-        self.set_header.grid(row=3, column=8, columnspan=1, padx=5, pady=5, sticky="n")
-        self.date_header.grid(row=3, column=9, columnspan=1, padx=5, pady=5, sticky="n")
+        self.name_header.grid(row=3, column=5, columnspan=1, padx=5, pady=5, sticky="n")
+        self.dex_header.grid(row=3, column=6, columnspan=1, padx=5, pady=5, sticky="n")
+        self.set_header.grid(row=3, column=7, columnspan=1, padx=5, pady=5, sticky="n")
+        self.date_header.grid(row=3, column=8, columnspan=1, padx=5, pady=5, sticky="n")
     
     def show_add(self):
         self.add_button.grid_remove()
@@ -73,6 +73,11 @@ class UI:
         self.add_button.grid(row=2, column=0, columnspan=2, pady=10)
 
     def display_cards(self):
+        for row in getattr(self, "card_widgets", []):
+            for widget in row:
+                widget.destroy()
+        self.card_widgets = []
+
         self.card_header_frame.grid_remove()
         cards = self.cr.get_cards()
         
@@ -85,20 +90,30 @@ class UI:
 
         i = 0
         for card in cards:
+            row_widgets = []
+
             entry_poke = tk.Label(self.card_header_frame, text=card[0])
             entry_poke.grid(row=5+i, column=5, columnspan=1, padx=5, pady=5)
+            row_widgets.append(entry_poke)
 
             entry_dex = tk.Label(self.card_header_frame, text=card[1])
             entry_dex.grid(row=5+i, column=6, columnspan=1, padx=5, pady=5)
+            row_widgets.append(entry_dex)
 
             entry_set = tk.Label(self.card_header_frame, text=card[2])
             entry_set.grid(row=5+i, column=7, columnspan=1, padx=5, pady=5)
+            row_widgets.append(entry_set)
 
             entry_date = tk.Label(self.card_header_frame, text=card[3])
             entry_date.grid(row=5+i, column=8, columnspan=1, padx=5, pady=5)
+            row_widgets.append(entry_date)
 
-            remove_button = tk.Button(self.card_header_frame, text="Remove", command=self.remove_card(card))
+            remove_button = tk.Button(self.card_header_frame, text="Remove", 
+                                      command=lambda c=card, w=row_widgets: self.remove_card(c, w))
             remove_button.grid(row=5+i, column=9, columnspan=1, padx=5, pady=5)
+            row_widgets.append(remove_button)
+
+            self.card_widgets.append(row_widgets)
 
             i += 1
         
@@ -119,8 +134,10 @@ class UI:
             self.display_cards()
             self.hide_add()
 
-    def remove_card(self, card):
+    def remove_card(self, card, widgets):
         self.cr.remove_card(card[0], card[1], card[2], card[3])
+        for widget in widgets:
+            widget.destroy()
         self.display_cards()
     
     def clear_fields(self):
