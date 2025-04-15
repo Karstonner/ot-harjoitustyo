@@ -11,8 +11,8 @@ Sovelluksen avulla pystyt tarkkailemaan keräämiäsi Pokémon-kortteja ja lajit
 - [Arkkitehtuuri](/dokumentaatio/arkkitehtuuri.md)
 
 ## Käyttöohje
-Ohjelma on tarkoitettu käytettäväksi Linux-järjestelmällä. 
-Windows toimii myös mutta joudut asentamaan Tkinterin kanssa sopivan sovelluksen itse (esim. XMing)
+Ohjelma on tarkoitettu käytettäväksi Linux-järjestelmällä.  
+Windows toimii myös mutta joudut asentamaan Tkinterin kanssa sopivan sovelluksen itse (esim. XMing)  
 1. Lataa sovelluksen viimeisin julkaisu
 [Release](https://github.com/Karstonner/ot-harjoitustyo/releases/latest)
 2. Asenna poetry-riippuvuudet juurihakemistossa:
