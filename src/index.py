@@ -11,6 +11,8 @@ class UI:
         self.root.columnconfigure(1, weight=1)
         heading = tk.Label(self.root, text="Your cards")
         heading.grid(row=0, column=1, columnspan=2, sticky="n")
+        self.add_frame = tk.Frame(self.root)
+        self.card_header_frame = tk.Frame(self.root)
         self.name_entry = tk.Entry(self.add_frame)
         self.name_header = tk.Label(self.card_header_frame, text="Pokémon")
         self.dex_entry = tk.Entry(self.add_frame)
@@ -19,20 +21,16 @@ class UI:
         self.set_header = tk.Label(self.card_header_frame, text="Set")
         self.date_entry = tk.Entry(self.add_frame)
         self.date_header = tk.Label(self.card_header_frame, text="Release Date")
+        self.setup_add_frame()
+        self.add_frame.grid_remove()
+        self.setup_card_headers()
+        self.card_header_frame.grid_remove()
         self.start()
 
     def start(self):
         self.add_button = tk.Button(self.root, text="Add card", fg="black", bg="white",
                                     command=self.show_add)
         self.add_button.grid(row=2, column=0, columnspan=2, pady=10)
-
-        self.add_frame = tk.Frame(self.root)
-        self.setup_add_frame()
-        self.add_frame.grid_remove()
-
-        self.card_header_frame = tk.Frame(self.root)
-        self.setup_card_headers()
-        self.card_header_frame.grid_remove()
 
         self.display_cards()
 
