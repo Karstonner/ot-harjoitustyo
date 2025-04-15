@@ -1,6 +1,6 @@
 import unittest
 import tkinter as tk
-from index import UI
+from gui import UI
 from initialize import initialize
 
 
