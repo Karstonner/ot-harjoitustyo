@@ -6,4 +6,5 @@
 | 25.3. |    1    | Aiheen valinta, vaatimusmäärittely  |
 | 1.4.  |    3    | Tietokanta, perusfunktioita, testi läpäisty  |
 | 8.4.  |    5    | GUI aloitettu, tiedonkäsittelyä parannettu  |
-|  yht  |    10    | |
+| 15.4. |    4    | Tieto on pysyvää, lajittelu, lisää testejä |
+|  yht  |    14    | |
