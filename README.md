@@ -15,11 +15,7 @@ Sovelluksen avulla pystyt tarkkailemaan keräämiäsi Pokémon-kortteja ja lajit
 ```bash
 poetry install
 ```
-2. Siirry virtuaaliympäristöön:
-```bash
-poetry shell
-```
-3. Käynnistä sovellus:
+2. Käynnistä sovellus:
 ```bash
 poetry run invoke start
 ```
