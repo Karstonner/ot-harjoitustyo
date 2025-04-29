@@ -24,4 +24,5 @@
 - Lisätty ohjeistavat oletustekstit tekstikenttiin
 - Lisätty konfirmaatiokenttä kortin poistaessa
 - Lisätty docstring-dokumentaatio relevantteihin tiedostoihin
+- Tehty alustava dokumentaatio sovelluksen arkkitehtuurista
 - Muokattu ja lisätty testejä
