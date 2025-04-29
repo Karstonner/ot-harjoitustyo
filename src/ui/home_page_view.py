@@ -1,8 +1,7 @@
 import tkinter as tk
-#import repositories.card_repository as cr
 from repositories.card_repository import CardRepository as cr
 
-class UI:
+class HomePage:
     def __init__(self, root):
         self.root = root
         self.root.title("Pokemon Card App")
@@ -40,19 +39,31 @@ class UI:
         self.setup_card_headers()
         self.card_header_frame.grid_remove()
         self.display_cards()
-
+    
     def setup_add_frame(self):
         tk.Label(self.add_frame, text="Pokemon's Name").grid(row=1, column=0)
         self.name_entry.grid(row=1, column=1)
+        self.name_entry.config(fg="grey")
+        self.name_entry.insert(0, "Esim: Bulbasaur")
+        self.name_entry.bind("<FocusIn>", self.name_focus_in)
 
         tk.Label(self.add_frame, text="Dex Number").grid(row=2, column=0)
         self.dex_entry.grid(row=2, column=1)
+        self.dex_entry.config(fg="grey")
+        self.dex_entry.insert(0, "# 1-1025")
+        self.dex_entry.bind("<FocusIn>", self.dex_focus_in)
 
         tk.Label(self.add_frame, text="Card Set").grid(row=3, column=0)
         self.set_entry.grid(row=3, column=1)
+        self.set_entry.config(fg="grey")
+        self.set_entry.insert(0, "Esim: Original")
+        self.set_entry.bind("<FocusIn>", self.set_focus_in)
 
         tk.Label(self.add_frame, text="Release Date").grid(row=4, column=0)
         self.date_entry.grid(row=4, column=1)
+        self.date_entry.config(fg="grey")
+        self.date_entry.insert(0, "YYYY-(M)M-(D)D")
+        self.date_entry.bind("<FocusIn>", self.date_focus_in)
 
         submit_button = tk.Button(self.add_frame, text="Submit", command=self.add_new)
         submit_button.grid(row=5, column=0, pady=5)
@@ -72,15 +83,31 @@ class UI:
 
         for col in range(5, 9):
             self.card_header_frame.columnconfigure(col, weight=1)
-
+    
     def show_add(self):
         self.add_button.grid_remove()
         self.add_frame.grid(row=1, column=0, columnspan=2, pady=10)
-
+    
     def hide_add(self):
         self.add_frame.grid_remove()
         self.clear_fields()
         self.add_button.grid(row=2, column=0, columnspan=2, pady=10)
+    
+    def name_focus_in(self, _):
+        self.name_entry.delete(0, tk.END)
+        self.name_entry.config(fg="black")
+    
+    def dex_focus_in(self, _):
+        self.dex_entry.delete(0, tk.END)
+        self.dex_entry.config(fg="black")
+    
+    def set_focus_in(self, _):
+        self.set_entry.delete(0, tk.END)
+        self.set_entry.config(fg="black")
+    
+    def date_focus_in(self, _):
+        self.date_entry.delete(0, tk.END)
+        self.date_entry.config(fg="black")
 
     def display_cards(self):
         for row in getattr(self, "card_widgets", []):
@@ -165,9 +192,15 @@ class UI:
         for widget in widgets:
             widget.destroy()
         self.display_cards()
-
+    
     def clear_fields(self):
         self.name_entry.delete(0, tk.END)
         self.dex_entry.delete(0, tk.END)
         self.set_entry.delete(0, tk.END)
         self.date_entry.delete(0, tk.END)
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = HomePage(root)
+    root.mainloop()
