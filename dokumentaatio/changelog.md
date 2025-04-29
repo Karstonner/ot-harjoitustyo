@@ -24,3 +24,4 @@
 - Lisätty ohjeistavat oletustekstit tekstikenttiin
 - Lisätty konfirmaatiokenttä kortin poistaessa
 - Lisätty docstring-dokumentaatio relevantteihin tiedostoihin
+- Muokattu ja lisätty testejä
