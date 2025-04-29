@@ -1,6 +1,6 @@
 import unittest
 import tkinter as tk
-from gui import UI
+from ui.home_page_view import HomePage
 from initialize import initialize
 from repositories.card_repository import CardRepository
 
@@ -9,11 +9,12 @@ class TestUI(unittest.TestCase):
     def setUp(self):
         initialize()
         self.root = tk.Tk()
-        self.ui = UI(self.root)
+        self.ui = HomePage(self.root)
         self.cards = [
-            ("Bulbasaur", 1, "Base", "1999-01-09"),
-            ("Charmander", 4, "Base", "1999-01-09"),
-            ("Squirtle", 7, "Base", "1999-01-09")]
+            ("Bulbasaur", 1, "Base Set", "1999-01-09"),
+            ("Charmander", 4, "Base Set", "1999-01-09"),
+            ("Squirtle", 7, "Base Set", "1999-01-09"),
+            ("Ampharos", 181, "Neo Genesis", "2000-02-04")]
 
     def tearDown(self):
         self.root.destroy()
@@ -34,12 +35,28 @@ class TestUI(unittest.TestCase):
     
     def test_sort_by_name_ascending(self):
         sorted_cards = self.ui.sort_cards(self.cards, 0, True)
-        self.assertEqual(sorted_cards[0][0], "Bulbasaur")
-        self.assertEqual(sorted_cards[1][0], "Charmander")
-        self.assertEqual(sorted_cards[2][0], "Squirtle")
+        self.assertEqual(sorted_cards[0][0], "Ampharos")
+        self.assertEqual(sorted_cards[1][0], "Bulbasaur")
+        self.assertEqual(sorted_cards[2][0], "Charmander")
+        self.assertEqual(sorted_cards[3][0], "Squirtle")
     
     def test_sort_by_dex_descending(self):
         sorted_cards = self.ui.sort_cards(self.cards, 1, False)
-        self.assertEqual(sorted_cards[0][1], 7)
-        self.assertEqual(sorted_cards[1][1], 4)
-        self.assertEqual(sorted_cards[2][1], 1)
+        self.assertEqual(sorted_cards[0][1], 181)
+        self.assertEqual(sorted_cards[1][1], 7)
+        self.assertEqual(sorted_cards[2][1], 4)
+        self.assertEqual(sorted_cards[3][1], 1)
+    
+    def test_sort_by_set_descending(self):
+        sorted_cards = self.ui.sort_cards(self.cards, 2, False)
+        self.assertEqual(sorted_cards[0][2], "Neo Genesis")
+        self.assertEqual(sorted_cards[1][2], "Base Set")
+        self.assertEqual(sorted_cards[2][2], "Base Set")
+        self.assertEqual(sorted_cards[3][2], "Base Set")
+    
+    def test_sort_by_date_ascending(self):
+        sorted_cards = self.ui.sort_cards(self.cards, 3, True)
+        self.assertEqual(sorted_cards[0][3], "1999-01-09")
+        self.assertEqual(sorted_cards[1][3], "1999-01-09")
+        self.assertEqual(sorted_cards[2][3], "1999-01-09")
+        self.assertEqual(sorted_cards[3][3], "2000-02-04")

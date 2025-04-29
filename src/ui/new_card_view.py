@@ -1,3 +1,8 @@
+# Tämä koko tiedosto oli yritys siirtää toiminnot eri sivuille.
+# Jostain syystä en kuitenkaan millään saanut siirroksia toimimaan.
+# Jätän tämän tänne keskeneräisenä, jos saisin viimeisellä viikolla siirroksen suoritettua.
+
+
 import tkinter as tk
 from ui.home_page_view import HomePage
 from repositories.card_repository import CardRepository as cr
