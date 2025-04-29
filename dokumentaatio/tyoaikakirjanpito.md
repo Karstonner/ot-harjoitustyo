@@ -7,4 +7,5 @@
 | 1.4.  |    3    | Tietokanta, perusfunktioita, testi läpäisty  |
 | 8.4.  |    5    | GUI aloitettu, tiedonkäsittelyä parannettu  |
 | 15.4. |    4    | Tieto on pysyvää, lajittelu, lisää testejä |
-|  yht  |    14    | |
+| 29.4. |    4    | Oletustekstit, poiston konfirmaatio, dokumentaatiota |
+|  yht  |    18    | |

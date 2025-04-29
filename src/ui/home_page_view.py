@@ -1,8 +1,25 @@
 import tkinter as tk
+from tkinter import messagebox as mb
 from repositories.card_repository import CardRepository as cr
 
 class HomePage:
+    """Sovelluksen avattua tämä sivu on näkyvissä."""
+
     def __init__(self, root):
+        """Luokan konstruktori. Alustaa kaikki sivun elementit.
+        
+        Args:
+            root:
+                Tkinter-elementti, jonka sisään näkymä alustetaan.
+            sort:
+                Mahdollistaa omistettujen korttien lajittelun ominaisuuksien perusteella.
+            header_labels: 
+                Ylläpitää listan otsikoista korttien määrän mukaisesti.
+            card_widgets:
+                Ylläpitää listan korteista widgetteinä määrän mukaisesti.
+            cr:
+                Tuo korttirepositorion hallintaamme.
+        """
         self.root = root
         self.root.title("Pokemon Card App")
         self.root.minsize(900, 600)
@@ -16,6 +33,7 @@ class HomePage:
         self.setup()
 
     def setup(self):
+        """Asettaa otsikot ja alustaa kortin lisäämisen."""
         heading = tk.Label(self.root, text="Your cards")
         heading.grid(row=0, column=1, columnspan=2, sticky="n")
         self.add_button = tk.Button(self.root, text="Add card", fg="black", bg="white",
@@ -41,6 +59,7 @@ class HomePage:
         self.display_cards()
     
     def setup_add_frame(self):
+        """Luo eri näkymän kortin lisäykselle."""
         tk.Label(self.add_frame, text="Pokemon's Name").grid(row=1, column=0)
         self.name_entry.grid(row=1, column=1)
         self.name_entry.config(fg="grey")
@@ -50,13 +69,13 @@ class HomePage:
         tk.Label(self.add_frame, text="Dex Number").grid(row=2, column=0)
         self.dex_entry.grid(row=2, column=1)
         self.dex_entry.config(fg="grey")
-        self.dex_entry.insert(0, "# 1-1025")
+        self.dex_entry.insert(0, "1 - 1025")
         self.dex_entry.bind("<FocusIn>", self.dex_focus_in)
 
         tk.Label(self.add_frame, text="Card Set").grid(row=3, column=0)
         self.set_entry.grid(row=3, column=1)
         self.set_entry.config(fg="grey")
-        self.set_entry.insert(0, "Esim: Original")
+        self.set_entry.insert(0, "Esim: Base Set")
         self.set_entry.bind("<FocusIn>", self.set_focus_in)
 
         tk.Label(self.add_frame, text="Release Date").grid(row=4, column=0)
@@ -72,6 +91,7 @@ class HomePage:
         cancel_button.grid(row=5, column=1, pady=5)
 
     def setup_card_headers(self):
+        """Luo korteille otsikot niiden määrän mukaan."""
         headers = ["Pokémon", "Dex #", "Expansion", "Release Date"]
         self.header_labels = []
 
@@ -85,31 +105,41 @@ class HomePage:
             self.card_header_frame.columnconfigure(col, weight=1)
     
     def show_add(self):
+        """Tuo kortin lisäyksen näkymän esille."""
         self.add_button.grid_remove()
         self.add_frame.grid(row=1, column=0, columnspan=2, pady=10)
     
     def hide_add(self):
+        """Piilottaa kortin lisäyksen näkymän."""
         self.add_frame.grid_remove()
         self.clear_fields()
         self.add_button.grid(row=2, column=0, columnspan=2, pady=10)
+
+    # Inspiraatio seuraaviin focus_in-komentoihin täältä: 
+    # https://stackoverflow.com/questions/51781651/showing-a-greyed-out-default-text-in-a-tk-entry
     
     def name_focus_in(self, _):
+        """Poistaa oletustekstin nimikentästä."""
         self.name_entry.delete(0, tk.END)
         self.name_entry.config(fg="black")
     
     def dex_focus_in(self, _):
+        """Poistaa oletustekstin pokedex-kentästä."""
         self.dex_entry.delete(0, tk.END)
         self.dex_entry.config(fg="black")
     
     def set_focus_in(self, _):
+        """Poistaa oletustekstin settikentästä."""
         self.set_entry.delete(0, tk.END)
         self.set_entry.config(fg="black")
     
     def date_focus_in(self, _):
+        """Poistaa oletustekstin päivämääräkentästä."""
         self.date_entry.delete(0, tk.END)
         self.date_entry.config(fg="black")
 
     def display_cards(self):
+        """Tuo kaikki olemassa olevat kortit näkyviin."""
         for row in getattr(self, "card_widgets", []):
             for widget in row:
                 widget.destroy()
@@ -165,6 +195,7 @@ class HomePage:
             self.card_header_frame.grid_remove()
 
     def setup_sorting(self, sort_index):
+        """Asettaa korttien järjestyksen halujen mukaiseksi."""
         if self.sort_by == sort_index:
             self.sort_ascending = not self.sort_ascending
         else:
@@ -174,9 +205,11 @@ class HomePage:
 
     @staticmethod
     def sort_cards(cards, sort_by, ascending):
+        """Staattinen metodi, joka järjestää kortit klikkauksella."""
         return sorted(cards, key=lambda x: x[sort_by], reverse=not ascending)
 
     def add_new(self):
+        """Tekee kortin lisäyksen tietokantaan ja repositorioon."""
         name = self.name_entry.get()
         number = self.dex_entry.get()
         card_set = self.set_entry.get()
@@ -188,12 +221,16 @@ class HomePage:
             self.hide_add()
 
     def remove_card(self, card, widgets):
-        self.cr.remove_card(card[0], card[1], card[2], card[3])
-        for widget in widgets:
-            widget.destroy()
-        self.display_cards()
+        """Poistaa kortin tietokannasta ja repositoriosta."""
+        confirmation = mb.askquestion("Remove Card", "Are you sure you want to remove this card?")
+        if confirmation == "yes":    
+            self.cr.remove_card(card[0], card[1], card[2], card[3])
+            for widget in widgets:
+                widget.destroy()
+            self.display_cards()
     
     def clear_fields(self):
+        """Tyhjentää tekstikentät."""
         self.name_entry.delete(0, tk.END)
         self.dex_entry.delete(0, tk.END)
         self.set_entry.delete(0, tk.END)

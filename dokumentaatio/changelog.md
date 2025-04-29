@@ -19,3 +19,8 @@
 - Kortteja pystyy lajittelemaan ominaisuuksien perusteella
 - Lisätty testejä
 - Poistettu entities, card_repository on riittävä
+
+## Viikko 6
+- Lisätty ohjeistavat oletustekstit tekstikenttiin
+- Lisätty konfirmaatiokenttä kortin poistaessa
+- Lisätty docstring-dokumentaatio relevantteihin tiedostoihin
