@@ -1,6 +1,6 @@
 import tkinter as tk
-from gui import UI
+from ui.home_page_view import HomePage
 
 window = tk.Tk()
-UI(window)
+HomePage(window)
 window.mainloop()
