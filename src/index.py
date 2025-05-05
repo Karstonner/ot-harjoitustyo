@@ -1,6 +1,8 @@
 import tkinter as tk
-from ui.home_page_view import HomePage
+from main_app import MainApp
 
-window = tk.Tk()
-HomePage(window)
-window.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = MainApp(root)
+    root.protocol("WM_DELETE_WINDOW", app.destroy)
+    root.mainloop()

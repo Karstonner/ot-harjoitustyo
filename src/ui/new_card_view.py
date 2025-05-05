@@ -1,43 +1,87 @@
-# Tämä koko tiedosto oli yritys siirtää toiminnot eri sivuille.
-# Jostain syystä en kuitenkaan millään saanut siirroksia toimimaan.
-# Jätän tämän tänne keskeneräisenä, jos saisin viimeisellä viikolla siirroksen suoritettua.
-
-
 import tkinter as tk
-from ui.home_page_view import HomePage
-from repositories.card_repository import CardRepository as cr
+from tkinter import messagebox as mb
+from repositories.card_repository import CardRepository
 
-class NewCard:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Add a New Card")
-        self.root.minsize(900, 600)
-        self.frame = tk.Frame(self.root)
+class NewCard(tk.Frame):
+    def __init__(self, parent, controller, card_repo):
+        super().__init__(parent)
+        self.controller = controller
+        self.card_repo = card_repo
+        self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
+        self.create_form()
 
-    def new_card(self):
-        self.name_entry = tk.Entry(self.frame)
-        self.dex_entry = tk.Entry(self.frame)
-        self.set_entry = tk.Entry(self.frame)
-        self.date_entry = tk.Entry(self.frame)
-        submit_button  = tk.Button(self.frame, text="Submit", command=self.submit_card)
+    def create_form(self):
+        form_frame = tk.Frame(self)
+        form_frame.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)
+        form_frame.columnconfigure(0, weight=1)
+        form_frame.columnconfigure(1, weight=2)
 
-        tk.Label(self.frame, text="Pokemon's Name").grid(row=1, column=0)
-        self.name_entry.grid(row=1, column=1)
+        self.name_entry = tk.Entry(form_frame, width=30)
+        self.dex_entry = tk.Entry(form_frame, width=30)
+        self.set_entry = tk.Entry(form_frame, width=30)
+        self.date_entry = tk.Entry(form_frame, width=30)
 
-        tk.Label(self.frame, text="Dex Number").grid(row=2, column=0)
-        self.dex_entry.grid(row=2, column=1)
+        self.name_entry.insert(0, "Esim: Bulbasaur")
+        self.name_entry.config(fg="grey")
+        self.name_entry.bind("<FocusIn>", self.name_focus_in)
 
-        tk.Label(self.frame, text="Card Set").grid(row=3, column=0)
-        self.set_entry.grid(row=3, column=1)
+        self.dex_entry.insert(0, "1 - 1025")
+        self.dex_entry.config(fg="grey")
+        self.dex_entry.bind("<FocusIn>", self.dex_focus_in)
 
-        tk.Label(self.frame, text="Release Date").grid(row=4, column=0)
-        self.date_entry.grid(row=4, column=1)
+        self.set_entry.insert(0, "Esim: Base Set")
+        self.set_entry.config(fg="grey")
+        self.set_entry.bind("<FocusIn>", self.set_focus_in)
 
-        submit_button.grid(row=5, column=1, pady=5)
+        self.date_entry.insert(0, "YYYY-(M)M-(D)D")
+        self.date_entry.config(fg="grey")
+        self.date_entry.bind("<FocusIn>", self.date_focus_in)
 
-        self.clear_fields()
-        self.frame.destroy()
-        self.redirect()
+        tk.Label(form_frame, text="Pokemon's Name:", anchor="e").grid(
+                        row=1, column=0, padx=5, pady=5, sticky="e")
+        self.name_entry.grid(row=1, column=1, padx=5, pady=5, sticky="w")
+
+        tk.Label(form_frame, text="Dex Number:", anchor="e").grid(
+                    row=2, column=0, padx=5, pady=5, sticky="e")
+        self.dex_entry.grid(row=2, column=1, padx=5, pady=5, sticky="w")
+
+        tk.Label(form_frame, text="Card Set:", anchor="e").grid(
+                    row=3, column=0, padx=5, pady=5, sticky="e")
+        self.set_entry.grid(row=3, column=1, padx=5, pady=5, sticky="w")
+
+        tk.Label(form_frame, text="Release Date:", anchor="e").grid(
+                    row=4, column=0, padx=5, pady=5, sticky="e")
+        self.date_entry.grid(row=4, column=1, padx=5, pady=5, sticky="w")
+
+        submit_button = tk.Button(form_frame, text="Submit", command=self.submit_card)
+        submit_button.grid(row=5, column=0, padx=5, pady=10)
+
+        cancel_button = tk.Button(form_frame, text="Cancel", command=self.cancel)
+        cancel_button.grid(row=5, column=1, padx=5, pady=10, sticky="w")
+    
+    # Inspiraatio seuraaviin focus_in-komentoihin täältä: 
+    # https://stackoverflow.com/questions/51781651/showing-a-greyed-out-default-text-in-a-tk-entry
+    
+    def name_focus_in(self, _):
+        """Poistaa oletustekstin nimikentästä."""
+        self.name_entry.delete(0, tk.END)
+        self.name_entry.config(fg="black")
+    
+    def dex_focus_in(self, _):
+        """Poistaa oletustekstin pokedex-kentästä."""
+        self.dex_entry.delete(0, tk.END)
+        self.dex_entry.config(fg="black")
+    
+    def set_focus_in(self, _):
+        """Poistaa oletustekstin settikentästä."""
+        self.set_entry.delete(0, tk.END)
+        self.set_entry.config(fg="black")
+    
+    def date_focus_in(self, _):
+        """Poistaa oletustekstin päivämääräkentästä."""
+        self.date_entry.delete(0, tk.END)
+        self.date_entry.config(fg="black")
     
     def submit_card(self):
         name = self.name_entry.get()
@@ -45,20 +89,48 @@ class NewCard:
         card_set = self.set_entry.get()
         release_date = self.date_entry.get()
 
-        if name and number and card_set and release_date:
-            HomePage(self.root).card_repo(name, number, card_set, release_date)
+        if not (name and number and card_set and release_date):
+            mb.showerror("Error", "All fields are required.")
+            return
+        
+        try:
+            pokedex_number = int(number)
+            if not 1 <= pokedex_number <= 1025:
+                mb.showerror("Error", "Dex Number must be between 1 and 1025.")
+                return
+        except ValueError:
+            mb.showerror("Error", "Dex Number must be a valid integer.")
+            return
+        
+        import re
+        if not re.match(r"^\d{4}-\d{1,2}-\d{1,2}$", release_date):
+            mb.showerror("Error", "Release Date must be in YYYY-MM-DD format.")
+            return
+        
+        try:
+            self.card_repo.new_card(name, pokedex_number, card_set, release_date)
+            self.clear_fields()
+            self.controller.show_frame('HomePage')
+        except Exception as e:
+            mb.showerror("Error", f"Failed to add card: {str(e)}")
+
+    def cancel(self):
+        self.clear_fields()
+        self.controller.show_frame('HomePage')
 
     def clear_fields(self):
         self.name_entry.delete(0, tk.END)
-        self.dex_entry.delete(0, tk.END)
-        self.set_entry.delete(0, tk.END)
-        self.date_entry.delete(0, tk.END)
-    
-    def redirect(self):
-        self.frame.destroy()
-        HomePage(self.root)
+        self.name_entry.insert(0, "Esim: Bulbasaur")
+        self.name_entry.config(fg="grey")
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = NewCard(root)
-    root.mainloop()
+        self.dex_entry.delete(0, tk.END)
+        self.dex_entry.insert(0, "1 - 1025")
+        self.dex_entry.config(fg="grey")
+
+        self.set_entry.delete(0, tk.END)
+        self.set_entry.insert(0, "Esim: Base Set")
+        self.set_entry.config(fg="grey")
+
+        self.date_entry.delete(0, tk.END)
+        self.date_entry.insert(0, "YYYY-(M)M-(D)D")
+        self.date_entry.config(fg="grey")
