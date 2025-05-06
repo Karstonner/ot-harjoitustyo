@@ -22,7 +22,7 @@ class HomePage(tk.Frame):
         """
         super().__init__(parent)
         self.controller = controller
-        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.sort_by = None
         self.sort_ascending = True
@@ -83,19 +83,19 @@ class HomePage(tk.Frame):
         for card in cards:
             row_widgets = []
 
-            entry_poke = tk.Label(self.card_header_frame, text=card[0])
+            entry_poke = tk.Label(self.card_header_frame, text=card.pokemon)
             entry_poke.grid(row=i+1, column=0, padx=10, pady=5, sticky="w")
             row_widgets.append(entry_poke)
 
-            entry_dex = tk.Label(self.card_header_frame, text=card[1])
+            entry_dex = tk.Label(self.card_header_frame, text=card.pokedex_number)
             entry_dex.grid(row=i+1, column=1, padx=10, pady=5, sticky="w")
             row_widgets.append(entry_dex)
 
-            entry_set = tk.Label(self.card_header_frame, text=card[2])
+            entry_set = tk.Label(self.card_header_frame, text=card.expansion)
             entry_set.grid(row=i+1, column=2, padx=10, pady=5, sticky="w")
             row_widgets.append(entry_set)
 
-            entry_date = tk.Label(self.card_header_frame, text=card[3])
+            entry_date = tk.Label(self.card_header_frame, text=card.release_date)
             entry_date.grid(row=i+1, column=3, padx=10, pady=5, sticky="w")
             row_widgets.append(entry_date)
 
@@ -119,6 +119,18 @@ class HomePage(tk.Frame):
         
         amount = tk.Label(self.card_header_frame, text=amount_text, font=("Arial", 12))
         amount.grid(row=0, column=0, columnspan=5, pady=(10, 0), sticky="e")
+    
+    def _get_sort_key(self, card, index):
+        """Helper method to get the sort key for a Card object."""
+        if index == 0:
+            return card.pokemon
+        elif index == 1:
+            return card.pokedex_number
+        elif index == 2:
+            return card.expansion
+        elif index == 3:
+            return card.release_date
+        return ""
 
     def setup_sorting(self, sort_index):
         """Asettaa korttien järjestyksen halujen mukaiseksi."""
@@ -138,7 +150,7 @@ class HomePage(tk.Frame):
         """Poistaa kortin tietokannasta ja repositoriosta."""
         confirmation = mb.askquestion("Remove Card", "Are you sure you want to remove this card?")
         if confirmation == "yes":    
-            self.cr.remove_card(card[0], card[1], card[2], card[3])
+            self.cr.remove_card(card.pokemon, card.pokedex_number, card.expansion, card.release_date)
             for widget in widgets:
                 widget.destroy()
             self.display_cards()

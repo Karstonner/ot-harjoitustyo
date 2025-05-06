@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox as mb
 from repositories.card_repository import CardRepository
+from entities.card import Card
 
 class NewCard(tk.Frame):
     def __init__(self, parent, controller, card_repo):

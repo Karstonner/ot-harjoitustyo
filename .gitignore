@@ -2,4 +2,4 @@
 __pycache__
 .coverage
 htmlcov
-data/database.sqlite
+data/pokemon_cards.sqlite
