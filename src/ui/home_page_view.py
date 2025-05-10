@@ -3,23 +3,35 @@ from tkinter import messagebox as mb
 from repositories.card_repository import CardRepository as cr
 
 class HomePage(tk.Frame):
-    """Sovelluksen avattua tämä sivu on näkyvissä."""
+    """Sovelluksen avattua tämä sivu on näkyvissä.
+
+    Attributes:
+        parent: Tkinter-ikkuna, jota käsitellään.
+        controller: näkymän vaihtava ohjain.
+        card_repo: käsiteltävä korttirepositorio.
+    """
 
     def __init__(self, parent, controller, card_repo):
         """Luokan konstruktori. Alustaa kaikki sivun elementit.
         
         Args:
-            root:
-                Tkinter-elementti, jonka sisään näkymä alustetaan.
-            sort:
-                Mahdollistaa omistettujen korttien lajittelun ominaisuuksien perusteella.
-            header_labels: 
-                Ylläpitää listan otsikoista korttien määrän mukaisesti.
-            card_widgets:
-                Ylläpitää listan korteista widgetteinä määrän mukaisesti.
+            parent:
+                Tkinter-ikkuna, johon näkymä luodaan.
+            controller:
+                Ohjain, joka mahdollistaa näkymän vaihtamisen.
             cr:
-                Tuo korttirepositorion hallintaamme.
+                Käsiteltävissä oleva korttirepositorio.
+            sort_by:
+                Järjestämisen määrittely, oletukselta None.
+            sort_ascending:
+                Boolean-arvo, järjestäminen joko nouseva tai laskeva.
+            header_labels:
+                Pitää listaa korttien otsikoista.
+            card_widgets:
+                Pitää listaa korteista riveittäin, pala palalta.
         """
+
+
         super().__init__(parent)
         self.controller = controller
         self.rowconfigure(0, weight=1)
@@ -32,7 +44,10 @@ class HomePage(tk.Frame):
         self.setup()
 
     def setup(self):
-        """Asettaa otsikot ja alustaa kortin lisäämisen."""
+        """Asettaa otsikot ja alustaa kortin lisäämisen.
+        """
+
+
         wrapper = tk.Frame(self)
         wrapper.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)
         wrapper.rowconfigure(1, weight=1)
@@ -52,7 +67,10 @@ class HomePage(tk.Frame):
         self.display_cards()
 
     def setup_card_headers(self):
-        """Luo korteille otsikot niiden määrän mukaan."""
+        """Luo korteille otsikot niiden määrän mukaan.
+        """
+
+
         headers = ["Pokémon", "Dex #", "Expansion", "Release Date"]
         self.header_labels = []
 
@@ -66,7 +84,10 @@ class HomePage(tk.Frame):
             self.card_header_frame.columnconfigure(col, weight=1)
 
     def display_cards(self):
-        """Tuo kaikki olemassa olevat kortit näkyviin."""
+        """Tuo kaikki olemassa olevat kortit näkyviin.
+        """
+
+
         for row in getattr(self, "card_widgets", []):
             for widget in row:
                 widget.destroy()
@@ -121,7 +142,10 @@ class HomePage(tk.Frame):
         amount.grid(row=0, column=0, columnspan=5, pady=(10, 0), sticky="e")
     
     def _get_sort_key(self, card, index):
-        """Helper method to get the sort key for a Card object."""
+        """Helper method to get the sort key for a Card object.
+        """
+
+
         if index == 0:
             return card.pokemon
         elif index == 1:
@@ -133,7 +157,10 @@ class HomePage(tk.Frame):
         return ""
 
     def setup_sorting(self, sort_index):
-        """Asettaa korttien järjestyksen halujen mukaiseksi."""
+        """Asettaa korttien järjestyksen halujen mukaiseksi.
+        """
+
+
         if self.sort_by == sort_index:
             self.sort_ascending = not self.sort_ascending
         else:
@@ -143,11 +170,17 @@ class HomePage(tk.Frame):
 
     @staticmethod
     def sort_cards(cards, sort_by, ascending):
-        """Staattinen metodi, joka järjestää kortit klikkauksella."""
+        """Staattinen metodi, joka järjestää kortit klikkauksella.
+        """
+
+
         return sorted(cards, key=lambda x: x[sort_by], reverse=not ascending)
 
     def remove_card(self, card, widgets):
-        """Poistaa kortin tietokannasta ja repositoriosta."""
+        """Poistaa kortin tietokannasta ja repositoriosta.
+        """
+
+        
         confirmation = mb.askquestion("Remove Card", "Are you sure you want to remove this card?")
         if confirmation == "yes":    
             self.cr.remove_card(card.pokemon, card.pokedex_number, card.expansion, card.release_date)

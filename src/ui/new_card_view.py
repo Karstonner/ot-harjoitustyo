@@ -4,7 +4,27 @@ from repositories.card_repository import CardRepository
 from entities.card import Card
 
 class NewCard(tk.Frame):
+    """Kortin lisäämisen näkymä.
+
+    Attributes:
+        parent: Tkinter-ikkuna, jota käsitellään.
+        controller: näkymän vaihtava ohjain.
+        card_repo: käsiteltävä korttirepositorio.
+    """
+
     def __init__(self, parent, controller, card_repo):
+        """Luokan konstruktori.
+        
+        Args:
+            parent:
+                Tkinter-ikkuna, johon näkymä luodaan.
+            controller:
+                Ohjain, joka mahdollistaa näkymän vaihtamisen.
+            card_repo:
+                Käsiteltävissä oleva korttirepositorio.
+        """
+
+
         super().__init__(parent)
         self.controller = controller
         self.card_repo = card_repo
@@ -13,6 +33,10 @@ class NewCard(tk.Frame):
         self.create_form()
 
     def create_form(self):
+        """Luo tekstikentät, joiden perusteella uusi kortti tehdään.
+        """
+
+
         form_frame = tk.Frame(self)
         form_frame.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)
         form_frame.columnconfigure(0, weight=1)
@@ -65,26 +89,42 @@ class NewCard(tk.Frame):
     # https://stackoverflow.com/questions/51781651/showing-a-greyed-out-default-text-in-a-tk-entry
     
     def name_focus_in(self, _):
-        """Poistaa oletustekstin nimikentästä."""
+        """Poistaa oletustekstin nimikentästä.
+        """
+
+
         self.name_entry.delete(0, tk.END)
         self.name_entry.config(fg="black")
     
     def dex_focus_in(self, _):
-        """Poistaa oletustekstin pokedex-kentästä."""
+        """Poistaa oletustekstin pokedex-kentästä.
+        """
+
+
         self.dex_entry.delete(0, tk.END)
         self.dex_entry.config(fg="black")
     
     def set_focus_in(self, _):
-        """Poistaa oletustekstin settikentästä."""
+        """Poistaa oletustekstin settikentästä.
+        """
+
+
         self.set_entry.delete(0, tk.END)
         self.set_entry.config(fg="black")
     
     def date_focus_in(self, _):
-        """Poistaa oletustekstin päivämääräkentästä."""
+        """Poistaa oletustekstin päivämääräkentästä.
+        """
+
+
         self.date_entry.delete(0, tk.END)
         self.date_entry.config(fg="black")
     
     def submit_card(self):
+        """Luo uuden kortin.
+        """
+
+
         name = self.name_entry.get()
         number = self.dex_entry.get()
         card_set = self.set_entry.get()
@@ -116,10 +156,18 @@ class NewCard(tk.Frame):
             mb.showerror("Error", f"Failed to add card: {str(e)}")
 
     def cancel(self):
+        """Peruuttaa kortin luonnin.
+        """
+
+
         self.clear_fields()
         self.controller.show_frame('HomePage')
 
     def clear_fields(self):
+        """Tyhjentää tekstikentät.
+        """
+
+        
         self.name_entry.delete(0, tk.END)
         self.name_entry.insert(0, "Esim: Bulbasaur")
         self.name_entry.config(fg="grey")

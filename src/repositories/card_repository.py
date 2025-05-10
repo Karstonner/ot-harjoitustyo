@@ -5,7 +5,8 @@ from entities.card import Card
 
 
 class CardRepository:
-    """Repositorio, joka pitää yllä olemassa olevat kortit."""
+    """Repositorio, joka pitää yllä olemassa olevat kortit.
+    """
 
     def __init__(self):
         """Luokan konstruktori.
@@ -16,11 +17,16 @@ class CardRepository:
             create_tables:
                 Luo taulut, jos niitä ei ole vielä olemassa.
         """
+
+
         self.conn = connect()
         create_tables(self.conn)
 
     def get_cards(self):
-        """Hakee kaikki omistetut kortit tietokannasta hallitavaan muotoon."""
+        """Hakee kaikki omistetut kortit tietokannasta hallitavaan muotoon.
+        """
+
+
         try:
             cursor = self.conn.cursor()
             cursor.execute("""SELECT id, Pokémon, Pokédex_Number, Expansion, Release_Date FROM Cards""")
@@ -31,7 +37,10 @@ class CardRepository:
             return []
 
     def new_card(self, pokemon, dex_number, expansion, release_date):
-        """Luo uuden kortin tietokantaan."""
+        """Luo uuden kortin tietokantaan.
+        """
+
+
         try:
             cursor = self.conn.cursor()
             cursor.execute(
@@ -46,7 +55,10 @@ class CardRepository:
             return False
 
     def remove_card(self, pokemon, dex_number, expansion, release_date):
-        """Poistaa kortin tietokannasta."""
+        """Poistaa kortin tietokannasta.
+        """
+
+
         try:
             cursor = self.conn.cursor()
             cursor.execute(
@@ -61,7 +73,10 @@ class CardRepository:
             return False
 
     def clear(self):
-        """Tyhjentää koko tietokannan, jos sellainen on olemassa. Ei kuitenkaan poista sitä."""
+        """Tyhjentää koko tietokannan, jos sellainen on olemassa. Ei kuitenkaan poista sitä.
+        """
+
+
         cursor = self.conn.cursor()
         try:
             cursor.execute("""DELETE FROM Cards""")

@@ -2,6 +2,13 @@ from db_connection import connect
 
 
 def create_tables(conn):
+    """Luo tietokantataulut.
+    
+    Args:
+        conn: Tietokantayhteys
+    """
+
+
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS Cards (
                    id INTEGER PRIMARY KEY,
@@ -13,6 +20,10 @@ def create_tables(conn):
 
 
 def initialize():
+    """Avaa tietokantayhteyden ja luo tietokantataulut.
+    """
+
+    
     conn = connect()
     create_tables(conn)
 
