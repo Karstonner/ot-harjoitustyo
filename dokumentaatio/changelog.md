@@ -30,3 +30,6 @@
 ## Viikko 7
 - Eritelty näkymät omille sivuilleen
 - Palautettu Entities
+- Docstring-dokumentaatio kunnossa
+- Muu dokumentaatio tehty
+- (Testit)

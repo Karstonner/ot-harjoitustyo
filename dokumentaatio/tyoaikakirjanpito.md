@@ -9,4 +9,5 @@
 | 15.4. |    4    | Tieto on pysyvää, lajittelu, lisää testejä |
 | 29.4. |    4    | Oletustekstit, poiston konfirmaatio, dokumentaatiota |
 | 6.5.  |    3    | Näkymät eritelty, Entities palautettu |
+| 11.5. |    ?    | Paljon dokumentaatiota |
 |  yht  |    21    | |

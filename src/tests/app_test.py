@@ -5,7 +5,7 @@ from initialize import initialize
 from repositories.card_repository import CardRepository
 
 
-class TestUI(unittest.TestCase):
+class TestApp(unittest.TestCase):
     def setUp(self):
         initialize()
         self.root = tk.Tk()
