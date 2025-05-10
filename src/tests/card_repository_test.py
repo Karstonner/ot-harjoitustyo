@@ -5,9 +5,9 @@ from initialize import initialize
 
 class TestCardRepository(unittest.TestCase):
     def setUp(self):
+        initialize()
         self.repo = cr()
         self.repo.clear()
-        initialize()
     
     def test_empty_database(self):
         self.assertEqual(len(self.repo.get_cards()), 0)

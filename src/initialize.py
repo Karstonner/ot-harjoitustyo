@@ -15,7 +15,6 @@ def create_tables(conn):
 def initialize():
     conn = connect()
     create_tables(conn)
-    conn.close()
 
-
-initialize()
+if __name__ == "__main__":
+    initialize()

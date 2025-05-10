@@ -26,3 +26,7 @@
 - Lisätty docstring-dokumentaatio relevantteihin tiedostoihin
 - Tehty alustava dokumentaatio sovelluksen arkkitehtuurista
 - Muokattu ja lisätty testejä
+
+## Viikko 7
+- Eritelty näkymät omille sivuilleen
+- Palautettu Entities

@@ -1,5 +1,6 @@
 import sqlite3
 from db_connection import connect
+from initialize import create_tables
 from entities.card import Card
 
 
@@ -12,8 +13,11 @@ class CardRepository:
         Args:
             conn:
                 Luo yhteyden tietokantaamme.
+            create_tables:
+                Luo taulut, jos niitä ei ole vielä olemassa.
         """
         self.conn = connect()
+        create_tables(self.conn)
 
     def get_cards(self):
         """Hakee kaikki omistetut kortit tietokannasta hallitavaan muotoon."""
