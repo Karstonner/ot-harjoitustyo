@@ -5,10 +5,12 @@ Sovelluksen avulla pystyt tarkkailemaan keräämiäsi Pokémon-kortteja ja lajit
 
 ## Dokumentaatio-linkit
 
-- [Vaatimusmäärittely](/dokumentaatio/vaatimusmaarittely.md)
-- [Työaikakirjanpito](/dokumentaatio/tyoaikakirjanpito.md)
-- [Changelog](/dokumentaatio/changelog.md)
 - [Arkkitehtuuri](/dokumentaatio/arkkitehtuuri.md)
+- [Changelog](/dokumentaatio/changelog.md)
+- [Käyttöohje](/dokumentaatio/kayttoohje.md)
+- [Testausdokumentti](/dokumentaatio/testaus.md)
+- [Työaikakirjanpito](/dokumentaatio/tyoaikakirjanpito.md)
+- [Vaatimusmäärittely](/dokumentaatio/vaatimusmaarittely.md)
 
 ## Käyttöohje
 Ohjelma on tarkoitettu käytettäväksi Linux-järjestelmällä.  

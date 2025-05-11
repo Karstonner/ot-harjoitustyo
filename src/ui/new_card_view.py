@@ -59,7 +59,7 @@ class NewCard(tk.Frame):
         self.set_entry.config(fg="grey")
         self.set_entry.bind("<FocusIn>", self.set_focus_in)
 
-        self.date_entry.insert(0, "YYYY-(M)M-(D)D")
+        self.date_entry.insert(0, "YYYY-MM-DD")
         self.date_entry.config(fg="grey")
         self.date_entry.bind("<FocusIn>", self.date_focus_in)
 
@@ -130,6 +130,17 @@ class NewCard(tk.Frame):
         card_set = self.set_entry.get()
         release_date = self.date_entry.get()
 
+        placeholders = {
+            "Esim: Bulbasaur": "",
+            "1 - 1025": "",
+            "Esim: Base Set": "",
+            "YYYY-MM-DD": ""
+        }
+        name = placeholders.get(name, name)
+        number = placeholders.get(number, number)
+        card_set = placeholders.get(card_set, card_set)
+        release_date = placeholders.get(release_date, release_date)
+
         if not (name and number and card_set and release_date):
             mb.showerror("Error", "All fields are required.")
             return
@@ -144,8 +155,14 @@ class NewCard(tk.Frame):
             return
         
         import re
-        if not re.match(r"^\d{4}-\d{1,2}-\d{1,2}$", release_date):
+        if not re.match(r"^\d{4}-\d{2}-\d{2}$", release_date):
             mb.showerror("Error", "Release Date must be in YYYY-MM-DD format.")
+            return
+        try:
+            from datetime import datetime
+            datetime.strptime(release_date, "%Y-%m-%d")
+        except ValueError:
+            mb.showerror("Error", "Release Date must be a valid date.")
             return
         
         try:
@@ -181,5 +198,5 @@ class NewCard(tk.Frame):
         self.set_entry.config(fg="grey")
 
         self.date_entry.delete(0, tk.END)
-        self.date_entry.insert(0, "YYYY-(M)M-(D)D")
+        self.date_entry.insert(0, "YYYY-MM-DD")
         self.date_entry.config(fg="grey")

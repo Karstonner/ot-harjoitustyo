@@ -71,6 +71,11 @@ class HomePage(tk.Frame):
         """
 
 
+        for widget in self.card_header_frame.winfo_children():
+            if (isinstance(widget, tk.Label) and widget.grid_info().get("row") == 0 
+                and widget.grid_info().get("column") in [0, 1, 2, 3]):
+                widget.destroy()
+
         headers = ["Pokémon", "Dex #", "Expansion", "Release Date"]
         self.header_labels = []
 
@@ -97,8 +102,8 @@ class HomePage(tk.Frame):
         cards = self.cr.get_cards()
 
         if self.sort_by is not None:
-            index = self.sort_by
-            cards.sort(key=lambda x: x[index], reverse=not self.sort_ascending)
+            cards.sort(key=lambda x: (self._get_sort_key(x, self.sort_by), x.pokemon.lower()),
+                       reverse=not self.sort_ascending)
 
         i = 0
         for card in cards:
@@ -138,20 +143,24 @@ class HomePage(tk.Frame):
         else:
             self.card_header_frame.grid_remove()
         
+        for widget in self.card_header_frame.winfo_children():
+            if isinstance(widget, tk.Label) and "card" in str(widget["text"]).lower():
+                widget.destroy()
+        
         amount = tk.Label(self.card_header_frame, text=amount_text, font=("Arial", 12))
         amount.grid(row=0, column=0, columnspan=5, pady=(10, 0), sticky="e")
     
     def _get_sort_key(self, card, index):
-        """Helper method to get the sort key for a Card object.
+        """Kortin järjestämisavaimen apumetodi.
         """
 
 
         if index == 0:
-            return card.pokemon
+            return card.pokemon.lower()
         elif index == 1:
             return card.pokedex_number
         elif index == 2:
-            return card.expansion
+            return card.expansion.lower()
         elif index == 3:
             return card.release_date
         return ""
@@ -167,14 +176,6 @@ class HomePage(tk.Frame):
             self.sort_by = sort_index
             self.sort_ascending = True
         self.display_cards()
-
-    @staticmethod
-    def sort_cards(cards, sort_by, ascending):
-        """Staattinen metodi, joka järjestää kortit klikkauksella.
-        """
-
-
-        return sorted(cards, key=lambda x: x[sort_by], reverse=not ascending)
 
     def remove_card(self, card, widgets):
         """Poistaa kortin tietokannasta ja repositoriosta.

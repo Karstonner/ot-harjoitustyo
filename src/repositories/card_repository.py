@@ -1,4 +1,5 @@
 import sqlite3
+import re
 from db_connection import connect
 from initialize import create_tables
 from entities.card import Card
@@ -8,7 +9,7 @@ class CardRepository:
     """Repositorio, joka pitää yllä olemassa olevat kortit.
     """
 
-    def __init__(self):
+    def __init__(self, conn=None):
         """Luokan konstruktori.
         
         Args:
@@ -19,7 +20,7 @@ class CardRepository:
         """
 
 
-        self.conn = connect()
+        self.conn = conn or connect()
         create_tables(self.conn)
 
     def get_cards(self):
@@ -29,10 +30,12 @@ class CardRepository:
 
         try:
             cursor = self.conn.cursor()
-            cursor.execute("""SELECT id, Pokémon, Pokédex_Number, Expansion, Release_Date FROM Cards""")
+            cursor.execute(
+            """SELECT id, Pokémon, Pokédex_Number, Expansion, Release_Date FROM Cards"""
+            )
             rows = cursor.fetchall()
             return [Card(row[1], row[2], row[3], row[4], row[0]) for row in rows]
-        except Exception as e:
+        except sqlite3.OperationalError as e:
             print(f"Error fetching cards: {e}")
             return []
 
@@ -40,7 +43,8 @@ class CardRepository:
         """Luo uuden kortin tietokantaan.
         """
 
-
+        if not re.match(r"^\d{4}-\d{1,2}-\d{1,2}$", str(release_date)):
+            return False
         try:
             cursor = self.conn.cursor()
             cursor.execute(
@@ -50,7 +54,7 @@ class CardRepository:
                 (pokemon, dex_number, expansion, release_date))
             self.conn.commit()
             return True
-        except Exception as e:
+        except sqlite3.OperationalError as e:
             print(f"Error inserting card: {e}")
             return False
 
@@ -68,7 +72,7 @@ class CardRepository:
             )
             self.conn.commit()
             return cursor.rowcount > 0
-        except Exception as e:
+        except sqlite3.OperationalError as e:
             print(f"Error removing card: {e}")
             return False
 

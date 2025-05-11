@@ -15,17 +15,18 @@ def create_tables(conn):
                    Pokémon TEXT,
                    Pokédex_Number INTEGER,
                    Expansion TEXT,
-                   Release_Date DATE)""")
+                   Release_Date DATE,
+                   UNIQUE(Pokémon, Pokédex_Number, Expansion, Release_Date))""")
     conn.commit()
 
 
-def initialize():
+def initialize(conn=None):
     """Avaa tietokantayhteyden ja luo tietokantataulut.
+
+    Args:
+        conn: SQLite-yhteys. Uusi yhteys luodaan, jos None.
     """
 
-    
-    conn = connect()
-    create_tables(conn)
 
-if __name__ == "__main__":
-    initialize()
+    conn = conn or connect()
+    create_tables(conn)

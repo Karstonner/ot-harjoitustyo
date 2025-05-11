@@ -26,4 +26,4 @@ Sovellus käynnistyy kotisivulle:
 ## Uuden kortin luominen
 **Add card** -nappula luo uuden näkymän:
 ![](./kuvat/New_Card.PNG)
-Tekstikenttiin kirjoitetaan lisäämäsi kortin ominaisuudet. Kortin lisäämisen voi perua Cancel-napilla ja valmis kortti lähetetään Submit-napilla. Sovellus palauttaa käyttäjän kotisivulle.
+Tekstikenttiin kirjoitetaan lisäämäsi kortin ominaisuudet. Kortin lisäämisen voi perua **Cancel**-napilla ja valmis kortti lähetetään **Submit**-napilla. Sovellus palauttaa käyttäjän kotisivulle.
